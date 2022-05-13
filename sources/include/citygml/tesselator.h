@@ -38,7 +38,6 @@
 
 namespace citygml {
     class CityGMLLogger;
-}
 
 // GLU based polygon tesselator
 class LIBCITYGML_EXPORT Tesselator
@@ -47,19 +46,19 @@ public:
     Tesselator( std::shared_ptr<citygml::CityGMLLogger> logger );
     ~Tesselator();
 
-    void init(const TVec3d& normal, GLenum winding_rule = GLU_TESS_WINDING_ODD );
+    void init(const DirectPosition& normal, GLenum winding_rule = GLU_TESS_WINDING_ODD );
 
     /**
      * @brief Add a new contour - add the exterior ring first, then interiors
      * @param textureCoordinatesLists a list of texture coordinates lists for the countour. Each list contains one texture coordinate for each vertex.
      */
-    void addContour(const std::vector<TVec3d>&, std::vector<std::vector<TVec2f> > textureCoordinatesLists);
+    void addContour(const std::vector<DirectPosition>&, std::vector<std::vector<TVec2f> > textureCoordinatesLists);
 
     // Let's tesselate!
     void compute();
 
     // Tesselation result access
-    const std::vector<TVec3d> getVertices() const;
+    const std::vector<DirectPosition> getVertices() const;
     const std::vector<std::vector<TVec2f> >& getTexCoords() const { return _texCoordsLists; }
     const std::vector<unsigned int>& getIndices() const;
 
@@ -78,7 +77,7 @@ private:
     GLUtesselator *_tobj;
     GLenum  _curMode;
 
-    std::list<TVec3d> _vertices;
+    std::list<DirectPosition> _vertices;
     std::vector<std::vector<TVec2f> > _texCoordsLists;
     std::list<unsigned int> _indices;
     std::vector<unsigned int> _outIndices;
@@ -88,5 +87,6 @@ private:
 
     bool _keepVertices;
 };
+}
 
 #endif // __TESSELATOR_H__

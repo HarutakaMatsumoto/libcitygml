@@ -16,18 +16,18 @@
 
 namespace citygml {
 
-    Polygon::Polygon(const std::string& id, std::shared_ptr<CityGMLLogger> logger)  : AppearanceTarget( id ), m_negNormal( false )
+    Polygon::Polygon(const std::string& id, std::shared_ptr<CityGMLLogger> logger)  : _Surface( id ), m_negNormal( false )
     {
         m_logger = logger;
         m_finished = false;
     }
 
-    const std::vector<TVec3d>& Polygon::getVertices() const
+    const std::vector<DirectPosition>& Polygon::getVertices() const
     {
         return m_vertices;
     }
 
-    std::vector<TVec3d>& Polygon::getVertices()
+    std::vector<DirectPosition>& Polygon::getVertices()
     {
         return m_vertices;
     }
@@ -106,11 +106,11 @@ namespace citygml {
     }
 
 
-    TVec3d Polygon::computeNormal()
+    DirectPosition Polygon::computeNormal()
     {
-        if ( m_exteriorRing == nullptr ) return TVec3d();
+        if ( exterior == nullptr ) return DirectPosition();
 
-        TVec3d normal = m_exteriorRing->computeNormal();
+        DirectPosition normal = exterior->computeNormal();
 
         return m_negNormal ? -normal : normal;
     }
@@ -129,12 +129,12 @@ namespace citygml {
         std::vector<TextureTargetDefinition*> texTargetDefinitions = this->getTextureTargetDefinitions();
 
         // mergeRings should be done before merging polygons... hence m_exteriorRings should only contain one object
-        if ( m_exteriorRing != nullptr )
+        if ( exterior != nullptr )
         {
-            m_exteriorRing->removeDuplicateVertices( texTargetDefinitions, logger );
+            exterior->removeDuplicateVertices( texTargetDefinitions, logger );
         }
 
-        for ( auto& ring : m_interiorRings )
+        for ( auto& ring : interior )
         {
             ring->removeDuplicateVertices( texTargetDefinitions, logger );
         }
@@ -173,23 +173,23 @@ namespace citygml {
 
     void Polygon::createIndicesWithTesselation(Tesselator& tesselator, std::shared_ptr<CityGMLLogger> logger)
     {
-        TVec3d normal = computeNormal();
+        DirectPosition normal = computeNormal();
 
         std::vector<std::string> themesFront = getAllTextureThemes(true);
         std::vector<std::string> themesBack = getAllTextureThemes(false);
 
         tesselator.init(normal);
 
-        if (m_exteriorRing != nullptr) {
+        if (exterior != nullptr) {
 
-            tesselator.addContour( m_exteriorRing->getVertices(), getTexCoordListsForRing(*m_exteriorRing, themesFront, themesBack));
+            tesselator.addContour( exterior->getVertices(), getTexCoordListsForRing(*exterior, themesFront, themesBack));
             if (!tesselator.keepVertices())
             {
-                m_exteriorRing->forgetVertices();                
+                exterior->forgetVertices();                
             }
         }
 
-        for ( auto& ring : m_interiorRings )
+        for ( auto& ring : interior )
         {
             tesselator.addContour( ring->getVertices(), getTexCoordListsForRing(*ring, themesFront, themesBack) );
             if (!tesselator.keepVertices())
@@ -255,18 +255,18 @@ namespace citygml {
             throw std::runtime_error("Can't add LinearRing to finished Polygon.");
         }
 
-        if (ring->isExterior() && m_exteriorRing != nullptr) {
+        if (ring->isExterior() && exterior != nullptr) {
             CITYGML_LOG_WARN(m_logger, "Duplicate definition of exterior LinearRing for Polygon with id '" << this->getId() << "'."
-                             << " Keeping exterior LinearRing with id '" << m_exteriorRing->getId() << "' and ignore LinearRing with id '" << ring->getId() << "'");
+                             << " Keeping exterior LinearRing with id '" << exterior->getId() << "' and ignore LinearRing with id '" << ring->getId() << "'");
             delete ring;
             return;
         }
 
         if ( ring->isExterior() ) {
-            m_exteriorRing = std::shared_ptr<LinearRing>(ring);
+            exterior = std::shared_ptr<LinearRing>(ring);
         }
         else {
-            m_interiorRings.push_back( std::shared_ptr<LinearRing>(ring) );
+            interior.push_back( std::shared_ptr<LinearRing>(ring) );
         }
     }
 

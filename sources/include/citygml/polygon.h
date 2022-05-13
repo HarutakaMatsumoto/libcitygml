@@ -6,10 +6,9 @@
 #include <unordered_map>
 
 #include <citygml/citygml_api.h>
-#include <citygml/appearancetarget.h>
+#include <citygml/_surface.h>
 #include <citygml/vecs.hpp>
-#include <citygml/linearring.h>
-#include <citygml/geometry.h>
+#include <citygml/_ring.h>
 
 class Tesselator;
 
@@ -23,7 +22,7 @@ namespace citygml {
     /**
      * @brief The Polygon class implements the functionality of gml::Polygon and gml::SurfacePatch (gml::Rectangle, gml::Triangle) objects
      */
-    class LIBCITYGML_EXPORT Polygon : public AppearanceTarget
+    class LIBCITYGML_EXPORT Polygon : public _Surface
     {
         friend class CityGMLFactory;
     public:
@@ -33,8 +32,8 @@ namespace citygml {
         };
 
         // Get the vertices
-        const std::vector<TVec3d>& getVertices() const;
-        std::vector<TVec3d>& getVertices();
+        const std::vector<DirectPosition>& getVertices() const;
+        std::vector<DirectPosition>& getVertices();
 
         // Get the indices
         const std::vector<unsigned int>& getIndices() const;
@@ -80,24 +79,24 @@ namespace citygml {
         bool negNormal() const;
         void setNegNormal(bool negNormal);
 
-        void addRing( LinearRing* );
+        void addRing( _Ring* );
 
         void finish(Tesselator& tesselator , bool optimize, bool tesselate, std::shared_ptr<CityGMLLogger> logger);
 
-        std::shared_ptr<LinearRing> exteriorRing(){
-            return m_exteriorRing;
+        std::shared_ptr<_Ring> exteriorRing(){
+            return exterior;
         }
 
-        const std::shared_ptr<LinearRing> exteriorRing() const{
-            return m_exteriorRing;
+        const std::shared_ptr<_Ring> exteriorRing() const{
+            return exterior;
         }
 
-        std::vector<std::shared_ptr<LinearRing> >& interiorRings() {
-            return m_interiorRings;
+        std::vector<std::shared_ptr<_Ring> >& interiorRings() {
+            return interior;
         }
 
-        const std::vector<std::shared_ptr<LinearRing> >& interiorRings() const{
-            return m_interiorRings;
+        const std::vector<std::shared_ptr<_Ring> >& interiorRings() const{
+            return interior;
         }
 
         virtual ~Polygon();
@@ -116,18 +115,18 @@ namespace citygml {
         void createSimpleIndices(std::shared_ptr<CityGMLLogger> logger);
         void createIndicesWithTesselation(Tesselator& tesselator, std::shared_ptr<CityGMLLogger> logger);
         void removeDuplicateVerticesInRings(std::shared_ptr<CityGMLLogger> logger);
-        std::vector<TVec2f> getTexCoordsForRingAndTheme(const LinearRing& ring, const std::string& theme, bool front);
-        std::vector<std::vector<TVec2f> > getTexCoordListsForRing(const LinearRing& ring, const std::vector<std::string>& themesFront, const std::vector<std::string>& themesBack);
+        std::vector<TVec2f> getTexCoordsForRingAndTheme(const _Ring& ring, const std::string& theme, bool front);
+        std::vector<std::vector<TVec2f> > getTexCoordListsForRing(const _Ring& ring, const std::vector<std::string>& themesFront, const std::vector<std::string>& themesBack);
 
-        TVec3d computeNormal();
+        DirectPosition computeNormal();
 
-        std::vector<TVec3d> m_vertices;
+        std::vector<DirectPosition> m_vertices;
         std::unordered_map<std::string, std::vector<TVec2f> > m_themeToFrontTexCoordsMap;
         std::unordered_map<std::string, std::vector<TVec2f> > m_themeToBackTexCoordsMap;
         std::vector<unsigned int> m_indices;
 
-        std::shared_ptr<LinearRing> m_exteriorRing;
-        std::vector<std::shared_ptr<LinearRing> > m_interiorRings;
+        std::shared_ptr<_Ring> exterior;
+        std::vector<std::shared_ptr<_Ring> > interior;
 
         bool m_negNormal;
         bool m_finished;

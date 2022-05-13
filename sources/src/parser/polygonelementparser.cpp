@@ -113,7 +113,7 @@ namespace citygml {
 
     void PolygonElementParser::parseRingElement(bool interior)
     {
-        setParserForNextElement(new LinearRingElementParser(m_documentParser, m_factory, m_logger, interior, [this](LinearRing* ring){
+        setParserForNextElement(new LinearRingElementParser(m_documentParser, m_factory, m_logger, interior, [this](_Ring* ring){
             m_model->addRing(ring);
         }));
     }

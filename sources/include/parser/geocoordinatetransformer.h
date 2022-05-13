@@ -4,9 +4,9 @@
 #include <memory>
 #include <unordered_map>
 
+namespace citygml {
 class GeoTransform;
 
-namespace citygml {
 
     class CityGMLLogger;
     class CityModel;

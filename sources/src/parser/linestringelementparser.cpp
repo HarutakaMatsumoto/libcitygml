@@ -84,7 +84,7 @@ namespace citygml {
             } else if (m_model->getDimensions() == 2) {
                 m_model->setVertices2D(parseVecList<TVec2d>(characters, m_logger, getDocumentLocation()));
             } else if (m_model->getDimensions() == 3) {
-                m_model->setVertices3D(parseVecList<TVec3d>(characters, m_logger, getDocumentLocation()));
+                m_model->setVertices3D(parseVecList<DirectPosition>(characters, m_logger, getDocumentLocation()));
             } else {
                 CITYGML_LOG_WARN(m_logger, "Unsupported dimension of LineString positions at " << getDocumentLocation() << ". Only 2 and 3 dimensions are supported.");
             }

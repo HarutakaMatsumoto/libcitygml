@@ -19,14 +19,14 @@ namespace citygml {
         /**
          * @brief lower left front corner of the bounding box in srs coordinates
          */
-        const TVec3d& getLowerBound() const;
-        void setLowerBound(const TVec3d& coordinate);
+        const DirectPosition& getLowerBound() const;
+        void setLowerBound(const DirectPosition& coordinate);
 
         /**
          * @brief upper right back corner of the bounding box in srs coordinates
          */
-        const TVec3d& getUpperBound() const;
-        void setUpperBound(const TVec3d& coordinate);
+        const DirectPosition& getUpperBound() const;
+        void setUpperBound(const DirectPosition& coordinate);
 
         /**
          * @brief the name of the spatial reference system
@@ -36,8 +36,8 @@ namespace citygml {
         const bool validBounds() const;
 
     protected:
-        TVec3d m_lowerBound;
-        TVec3d m_upperBound;
+        DirectPosition m_lowerBound;
+        DirectPosition m_upperBound;
         std::string m_srsName;
     };
 

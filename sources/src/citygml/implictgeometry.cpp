@@ -18,12 +18,12 @@ namespace citygml {
         return m_matrix;
     }
 
-    void ImplicitGeometry::setReferencePoint(const TVec3d& referencePoint)
+    void ImplicitGeometry::setReferencePoint(const DirectPosition& referencePoint)
     {
         m_referencePoint = referencePoint;
     }
 
-    TVec3d ImplicitGeometry::getReferencePoint() const
+    DirectPosition ImplicitGeometry::getReferencePoint() const
     {
         return m_referencePoint;
     }

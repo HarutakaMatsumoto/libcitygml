@@ -15,7 +15,7 @@
 
 namespace citygml {
 
-    LinearRingElementParser::LinearRingElementParser(CityGMLDocumentParser& documentParser, CityGMLFactory& factory, std::shared_ptr<CityGMLLogger> logger, bool interior, std::function<void(LinearRing*)> callback)
+    LinearRingElementParser::LinearRingElementParser(CityGMLDocumentParser& documentParser, CityGMLFactory& factory, std::shared_ptr<CityGMLLogger> logger, bool interior, std::function<void(_Ring*)> callback)
         : GMLObjectElementParser(documentParser, factory, logger)
     {
         m_callback = callback;
@@ -81,10 +81,10 @@ namespace citygml {
         }
 
         if (node == NodeType::GML_PosListNode) {
-            m_model->setVertices(parseVecList<TVec3d>(characters, m_logger, getDocumentLocation()));
+            m_model->setVertices(parseVecList<DirectPosition>(characters, m_logger, getDocumentLocation()));
             return true;
         } else if (node == NodeType::GML_PosNode) {
-            m_model->addVertex(parseValue<TVec3d>(characters, m_logger, getDocumentLocation()));
+            m_model->addVertex(parseValue<DirectPosition>(characters, m_logger, getDocumentLocation()));
             return true;
         }
 

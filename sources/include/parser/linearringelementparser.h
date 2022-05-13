@@ -1,6 +1,7 @@
 #pragma once
 
 #include <parser/gmlobjectparser.h>
+#include <citygml/_ring.h>
 
 #include <functional>
 
@@ -10,7 +11,7 @@ namespace citygml {
 
     class LinearRingElementParser : public GMLObjectElementParser {
     public:
-        LinearRingElementParser(CityGMLDocumentParser& documentParser, CityGMLFactory& factory, std::shared_ptr<CityGMLLogger> logger, bool interior, std::function<void(LinearRing*)> callback);
+        LinearRingElementParser(CityGMLDocumentParser& documentParser, CityGMLFactory& factory, std::shared_ptr<CityGMLLogger> logger, bool interior, std::function<void(_Ring*)> callback);
 
         // ElementParser interface
         virtual std::string elementParserName() const override;

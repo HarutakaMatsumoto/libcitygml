@@ -4,6 +4,10 @@
 #include <math.h>
 #include <string.h>
 
+namespace citygml {
+
+typedef double LengthType;
+
 // 2D vector class.
 
 template< class T > class TVec2
@@ -282,7 +286,8 @@ template<class T> inline std::istream& operator>>(std::istream & is, TVec3<T> & 
 }
 
 typedef TVec3< float >			TVec3f;
-typedef TVec3< double >			TVec3d;
+typedef TVec3< double >			DirectPosition;
+typedef std::vector<DirectPosition> posList;
 
 
 //std::istream& operator>>(std::istream & is, TVec3d & v)
@@ -335,4 +340,6 @@ template<class T> inline std::istream& operator>>( std::istream & is, TVec4<T> &
 
 typedef TVec4< float >			TVec4f;
 typedef TVec4< double >			TVec4d;
+
+}
 

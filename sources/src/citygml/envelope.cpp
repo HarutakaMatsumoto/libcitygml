@@ -18,8 +18,8 @@ namespace citygml {
 
     Envelope::Envelope()
     {
-        m_lowerBound = TVec3d(NAN,NAN,NAN);
-        m_upperBound = TVec3d(NAN,NAN,NAN);
+        m_lowerBound = DirectPosition(NAN,NAN,NAN);
+        m_upperBound = DirectPosition(NAN,NAN,NAN);
     }
 
     Envelope::Envelope(const std::string& srsName)
@@ -27,22 +27,22 @@ namespace citygml {
         m_srsName = srsName;
     }
 
-    const TVec3d& Envelope::getLowerBound() const
+    const DirectPosition& Envelope::getLowerBound() const
     {
         return m_lowerBound;
     }
 
-    void Envelope::setLowerBound(const TVec3d& coordinate)
+    void Envelope::setLowerBound(const DirectPosition& coordinate)
     {
         m_lowerBound = coordinate;
     }
 
-    const TVec3d& Envelope::getUpperBound() const
+    const DirectPosition& Envelope::getUpperBound() const
     {
         return m_upperBound;
     }
 
-    void Envelope::setUpperBound(const TVec3d& coordinate)
+    void Envelope::setUpperBound(const DirectPosition& coordinate)
     {
         m_upperBound = coordinate;
     }

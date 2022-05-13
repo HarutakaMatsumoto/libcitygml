@@ -19,8 +19,8 @@ namespace citygml {
         void setTransformMatrix(const TransformationMatrix matrix);
         const TransformationMatrix& getTransformMatrix() const;
 
-        void setReferencePoint(const TVec3d& referencePoint);
-        TVec3d getReferencePoint() const;
+        void setReferencePoint(const DirectPosition& referencePoint);
+        DirectPosition getReferencePoint() const;
 
         void addGeometry(std::shared_ptr<Geometry> geom);
 
@@ -38,7 +38,7 @@ namespace citygml {
         ImplicitGeometry(const std::string& id);
 
         TransformationMatrix     m_matrix;
-        TVec3d                   m_referencePoint;
+        DirectPosition                   m_referencePoint;
         std::vector<std::shared_ptr<Geometry> >   m_geometries;
         std::string              m_srsName;
     };

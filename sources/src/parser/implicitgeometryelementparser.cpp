@@ -136,7 +136,7 @@ namespace citygml {
 
         } else if (node == NodeType::GML_PosNode) {
 
-            m_model->setReferencePoint(parseValue<TVec3d>(characters, m_logger, getDocumentLocation()));
+            m_model->setReferencePoint(parseValue<DirectPosition>(characters, m_logger, getDocumentLocation()));
             return true;
         } else if (   node == NodeType::CORE_RelativeGMLGeometryNode
                    || node == NodeType::GML_PointNode

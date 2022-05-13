@@ -47,7 +47,7 @@ Tesselator::Tesselator(std::shared_ptr<citygml::CityGMLLogger> logger )
     gluTessCallback( _tobj, GLU_TESS_ERROR_DATA, (GLU_TESS_CALLBACK)&errorCallback );
 }
 
-void Tesselator::init( const TVec3d& normal, GLenum winding_rule )
+void Tesselator::init( const DirectPosition& normal, GLenum winding_rule )
 {
     gluTessBeginPolygon( _tobj, this );
 
@@ -71,9 +71,9 @@ void Tesselator::compute()
     gluTessEndPolygon( _tobj );
 }
 
-const std::vector<TVec3d> Tesselator::getVertices() const
+const std::vector<DirectPosition> Tesselator::getVertices() const
 {
-    return std::vector<TVec3d>(_vertices.begin(), _vertices.end());
+    return std::vector<DirectPosition>(_vertices.begin(), _vertices.end());
 }
 
 const std::vector<unsigned int>& Tesselator::getIndices() const
@@ -91,7 +91,7 @@ bool Tesselator::keepVertices() const
     return _keepVertices;
 }
 
-void Tesselator::addContour(const std::vector<TVec3d>& pts, std::vector<std::vector<TVec2f> > textureCoordinatesLists )
+void Tesselator::addContour(const std::vector<DirectPosition>& pts, std::vector<std::vector<TVec2f> > textureCoordinatesLists )
 {
     unsigned int len = pts.size();
     if ( len < 3 ) return;
@@ -167,7 +167,7 @@ void CALLBACK Tesselator::combineCallback( GLdouble coords[3], void* vertex_data
 {
     Tesselator *tess = static_cast<Tesselator*>(userData);
     tess->_indices.push_back(tess->_indices.size());
-    tess->_vertices.push_back( TVec3d( coords[0], coords[1], coords[2] ) );
+    tess->_vertices.push_back( DirectPosition( coords[0], coords[1], coords[2] ) );
 
     if (!tess->_texCoordsLists.empty()) {
 

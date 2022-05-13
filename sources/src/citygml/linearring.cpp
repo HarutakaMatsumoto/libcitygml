@@ -23,22 +23,22 @@ namespace citygml {
         return m_vertices.size();
     }
 
-    void LinearRing::addVertex(const TVec3d& v)
+    void LinearRing::addVertex(const DirectPosition& v)
     {
         m_vertices.push_back( v );
     }
 
-    TVec3d LinearRing::computeNormal() const
+    DirectPosition LinearRing::computeNormal() const
     {
         unsigned int len = size();
-        if ( len < 3 ) return TVec3d();
+        if ( len < 3 ) return DirectPosition();
 
         // Tampieri, F. 1992. Newell's method for computing the plane equation of a polygon. In Graphics Gems III, pp.231-232.
-        TVec3d n( 0., 0., 0. );
+        DirectPosition n( 0., 0., 0. );
         for ( unsigned int i = 0; i < len; i++ )
         {
-            const TVec3d& current = m_vertices[i];
-            const TVec3d& next = m_vertices[ ( i + 1 ) % len];
+            const DirectPosition& current = m_vertices[i];
+            const DirectPosition& next = m_vertices[ ( i + 1 ) % len];
 
             n.x += ( current.y - next.y ) * ( current.z + next.z );
             n.y += ( current.z - next.z ) * ( current.x + next.x );
@@ -47,17 +47,17 @@ namespace citygml {
         return n.normal();
     }
 
-    std::vector<TVec3d>& LinearRing::getVertices()
+    std::vector<DirectPosition>& LinearRing::getVertices()
     {
         return m_vertices;
     }
 
-    void LinearRing::setVertices(std::vector<TVec3d> vertices)
+    void LinearRing::setVertices(std::vector<DirectPosition> vertices)
     {
         m_vertices = vertices;
     }
 
-    const std::vector<TVec3d>& LinearRing::getVertices() const
+    const std::vector<DirectPosition>& LinearRing::getVertices() const
     {
         return m_vertices;
     }

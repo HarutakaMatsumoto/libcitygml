@@ -580,7 +580,7 @@ namespace citygml {
 
     }
 
-    FeatureObject* CityObjectElementParser::getFeatureObject()
+    _Feature* CityObjectElementParser::getFeatureObject()
     {
         return m_model;
     }

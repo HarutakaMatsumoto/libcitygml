@@ -8,19 +8,19 @@ namespace citygml {
 
     }
 
-    void ImplicitGeometry::setTransformMatrix(const TransformationMatrix matrix)
+    void ImplicitGeometry::setTransformMatrix(const TransformationMatrix4x4Type matrix)
     {
-        m_matrix = matrix;
+        matrix = matrix;
     }
 
-    const TransformationMatrix& ImplicitGeometry::getTransformMatrix() const
+    const TransformationMatrix4x4Type& ImplicitGeometry::getTransformMatrix() const
     {
-        return m_matrix;
+        return transformationMatrix;
     }
 
     void ImplicitGeometry::setReferencePoint(const DirectPosition& referencePoint)
     {
-        m_referencePoint = referencePoint;
+        referencePoint = referencePoint;
     }
 
     DirectPosition ImplicitGeometry::getReferencePoint() const

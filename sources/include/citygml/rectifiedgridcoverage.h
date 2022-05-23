@@ -1,10 +1,10 @@
 #pragma once
 
-#include <citygml/featureobject.h>
+#include <citygml/_feature.h>
 
 namespace citygml {
 
-    class LIBCITYGML_EXPORT RectifiedGridCoverage : public FeatureObject
+    class LIBCITYGML_EXPORT RectifiedGridCoverage : public _Feature
     {
         friend class CityGMLFactory;
         

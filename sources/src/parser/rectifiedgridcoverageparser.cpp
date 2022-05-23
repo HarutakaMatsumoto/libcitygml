@@ -78,7 +78,7 @@ namespace citygml {
         return GMLObjectElementParser::parseChildElementEndTag(node, characters);
     }
 
-    FeatureObject* RectifiedGridCoverageParser::getFeatureObject()
+    _Feature* RectifiedGridCoverageParser::getFeatureObject()
     {
         return m_model;
     }

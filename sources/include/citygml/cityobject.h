@@ -3,7 +3,8 @@
 #include <vector>
 #include <memory>
 
-#include <citygml/featureobject.h>
+#include <citygml/_feature.h>
+#include <appearance.h>
 #include <citygml/citygml_api.h>
 #include <citygml/enum_type_bitmask.h>
 #include <citygml/rectifiedgridcoverage.h>
@@ -20,7 +21,7 @@ namespace citygml {
     class AppearanceManager;
     class Address;
 
-    class LIBCITYGML_EXPORT CityObject : public FeatureObject
+    class LIBCITYGML_EXPORT CityObject : public _Feature
     {
     public:
 
@@ -124,14 +125,16 @@ namespace citygml {
         virtual ~CityObject();
 
     protected:
-        CityObjectsType m_type;
-
-        std::vector<std::unique_ptr<Geometry> > m_geometries;
-        std::vector<std::unique_ptr<ImplicitGeometry> > m_implicitGeometries;
-        std::vector<std::unique_ptr<CityObject> > m_children;
-        std::unique_ptr<Address> m_address;
-        std::unique_ptr<RectifiedGridCoverage> m_rectifiedGridCoverage;
-        std::unique_ptr<ExternalReference> m_externalReference;
+        
+        std::vector<std::shared_ptr<_Feature>> appearance;
+//        CityObjectsType m_type;
+//
+//        std::vector<std::unique_ptr<Geometry> > m_geometries;
+//        std::vector<std::unique_ptr<ImplicitGeometry> > m_implicitGeometries;
+//        std::vector<std::unique_ptr<CityObject> > m_children;
+//        std::unique_ptr<Address> m_address;
+//        std::unique_ptr<RectifiedGridCoverage> m_rectifiedGridCoverage;
+//        std::unique_ptr<ExternalReference> m_externalReference;
     };
 
     LIBCITYGML_EXPORT std::ostream& operator<<( std::ostream& os, const CityObject& o );

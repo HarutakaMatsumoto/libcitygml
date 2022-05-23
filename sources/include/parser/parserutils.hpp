@@ -22,7 +22,7 @@ namespace citygml {
         return v;
     }
 
-    inline TransformationMatrix parseMatrix( const std::string &s, std::shared_ptr<citygml::CityGMLLogger>& logger, const DocumentLocation& location)
+    inline TransformationMatrix4x4Type parseMatrix( const std::string &s, std::shared_ptr<citygml::CityGMLLogger>& logger, const DocumentLocation& location)
     {
         std::stringstream ss;
         ss << s;
@@ -43,7 +43,7 @@ namespace citygml {
             ss >> matrix[i];
         }
 
-        return TransformationMatrix(matrix);
+        return TransformationMatrix4x4Type(matrix);
     }
 
     template<> inline bool parseValue( const std::string &s, std::shared_ptr<citygml::CityGMLLogger>& logger, const DocumentLocation& location )

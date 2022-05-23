@@ -6,7 +6,7 @@
 
 #include <citygml/citygml_api.h>
 #include <citygml/cityobject.h>
-#include <citygml/featureobject.h>
+#include <citygml/_feature.h>
 
 namespace citygml {
 
@@ -20,7 +20,7 @@ namespace citygml {
     typedef std::vector<const CityObject*> ConstCityObjects;
     typedef std::map< CityObject::CityObjectsType, std::vector<const CityObject*> > CityObjectsMap;
 
-    class LIBCITYGML_EXPORT CityModel : public FeatureObject
+    class LIBCITYGML_EXPORT CityModel : public _Feature
     {
         friend class CityGMLFactory;
     public:
@@ -47,8 +47,9 @@ namespace citygml {
         ~CityModel();
 
     protected:
-
         CityModel( const std::string& id = "CityModel");
+        
+        std::vector<std::shared_ptr<Appearance>> appearanceMember;
 
         void addToCityObjectsMapRecursive(const CityObject* cityObj);
 

@@ -2,7 +2,9 @@
 
 #include <vector>
 #include <memory>
+#include <optional>
 
+#include <citygml/codetype.h>
 #include <citygml/object.h>
 #include <citygml/transformmatrix.h>
 #include <citygml/vecs.hpp>
@@ -16,8 +18,8 @@ namespace citygml {
     {
         friend class CityGMLFactory;
     public:
-        void setTransformMatrix(const TransformationMatrix matrix);
-        const TransformationMatrix& getTransformMatrix() const;
+        void setTransformMatrix(const TransformationMatrix4x4Type matrix);
+        const TransformationMatrix4x4Type& getTransformMatrix() const;
 
         void setReferencePoint(const DirectPosition& referencePoint);
         DirectPosition getReferencePoint() const;
@@ -37,9 +39,11 @@ namespace citygml {
     protected:
         ImplicitGeometry(const std::string& id);
 
-        TransformationMatrix     m_matrix;
-        DirectPosition                   m_referencePoint;
-        std::vector<std::shared_ptr<Geometry> >   m_geometries;
-        std::string              m_srsName;
+        CodeType mimeType;
+        TransformationMatrix4x4Type     transformationMatrix;
+        anyURI libraryObject;
+        std::shared_ptr<DirectPosition>                   referencePoint;
+        std::optional<std::shared_ptr<Geometry> >   relativeGMLGeometry;
+//        std::string              m_srsName;
     };
 }

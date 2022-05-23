@@ -3,24 +3,24 @@
 
 namespace citygml {
 
-    Texture::Texture(const std::string& id) : Appearance( id, "Texture" ), m_repeat( false ), m_wrapMode( WrapMode::WM_NONE )
+    Texture::Texture(const std::string& id) : Appearance( id, "Texture" ), m_repeat( false ), wrapMode( WrapModeType::WM_NONE )
     {
 
     }
 
-    Texture::Texture(const std::string& id, const std::string& type) : Appearance( id, type ), m_repeat( false ), m_wrapMode( WrapMode::WM_NONE )
+    Texture::Texture(const std::string& id, const std::string& type) : Appearance( id, type ), m_repeat( false ), wrapMode( WrapModeType::WM_NONE )
     {
 
     }
 
     std::string Texture::getUrl() const
     {
-        return m_url;
+        return imageURI;
     }
 
     void Texture::setUrl(const std::string& url)
     {
-        m_url = url;
+        imageURI = url;
     }
 
     bool Texture::getRepeat() const
@@ -28,32 +28,32 @@ namespace citygml {
         return m_repeat;
     }
 
-    Texture::WrapMode Texture::getWrapMode() const
+    Texture::WrapModeType Texture::getWrapMode() const
     {
-        return m_wrapMode;
+        return wrapMode;
     }
 
-    void Texture::setWrapMode(Texture::WrapMode mode)
+    void Texture::setWrapMode(Texture::WrapModeType mode)
     {
-        m_wrapMode = mode;
+        wrapMode = mode;
     }
 
     bool Texture::setWrapModeFromString(std::string wrapMode)
     {
         if ( ci_string_compare( wrapMode, "wrap" ) ) {
-            this->setWrapMode(Texture::WrapMode::WM_WRAP);
+            this->setWrapMode(Texture::WrapModeType::WM_WRAP);
         }
         else if ( ci_string_compare( wrapMode, "mirror" ) ) {
-            this->setWrapMode(Texture::WrapMode::WM_MIRROR);
+            this->setWrapMode(Texture::WrapModeType::WM_MIRROR);
         }
         else if ( ci_string_compare( wrapMode, "clamp" ) ) {
-            this->setWrapMode(Texture::WrapMode::WM_CLAMP);
+            this->setWrapMode(Texture::WrapModeType::WM_CLAMP);
         }
         else if ( ci_string_compare( wrapMode, "border" ) ) {
-            this->setWrapMode(Texture::WrapMode::WM_BORDER);
+            this->setWrapMode(Texture::WrapModeType::WM_BORDER);
         }
         else if ( ci_string_compare( wrapMode, "none" ) ) {
-            this->setWrapMode(Texture::WrapMode::WM_NONE);
+            this->setWrapMode(Texture::WrapModeType::WM_NONE);
         }
         else {
             return false;

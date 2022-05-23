@@ -6,7 +6,13 @@
 
 namespace citygml {
 
+typedef bool boolean;
+typedef double doubleList;
+typedef double doubleBetween0and1;
 typedef double LengthType;
+typedef std::string TextureType;
+typedef std::string string;
+typedef std::string anyURI;
 
 // 2D vector class.
 
@@ -338,7 +344,7 @@ template<class T> inline std::istream& operator>>( std::istream & is, TVec4<T> &
     return is >> v.x >> v.y >> v.z >>  v.w;
 }
 
-typedef TVec4< float >			TVec4f;
+typedef TVec4< float >			ColorPlusOpacity;
 typedef TVec4< double >			TVec4d;
 
 }

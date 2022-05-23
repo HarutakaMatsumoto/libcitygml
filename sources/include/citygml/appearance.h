@@ -3,9 +3,11 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <optional>
 
 #include <citygml/citygml_api.h>
-#include <citygml/object.h>
+#include <citygml/_feature.h>
+#include <citygml/_surfacedata.h>
 #include <citygml/appearancetarget.h>
 
 namespace citygml {
@@ -14,7 +16,7 @@ namespace citygml {
     class Texture;
     class GeoreferencedTexture;
 
-    class LIBCITYGML_EXPORT Appearance : public Object, public std::enable_shared_from_this<Appearance>
+    class LIBCITYGML_EXPORT Appearance : public _Feature, public std::enable_shared_from_this<Appearance>
     {
     public:
         std::string getType() const;
@@ -41,9 +43,10 @@ namespace citygml {
 
     protected:
         Appearance( const std::string& id, const std::string& typeString );
-        std::string m_typeString;
-        std::vector<std::string> m_themes;
-        bool m_isFront;
+//        std::string m_typeString;
+        std::optional<std::string> themes;
+        std::vector<std::shared_ptr<_SurfaceData>> surfaceDataMember;
+//        bool m_isFront;
     };
 
 }

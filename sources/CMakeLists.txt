@@ -55,7 +55,7 @@ SET(SOURCES
   src/citygml/citymodel.cpp
   src/citygml/tesselator.cpp
   src/citygml/object.cpp
-  src/citygml/featureobject.cpp
+  src/citygml/_feature.cpp
   src/citygml/appearance.cpp
   src/citygml/texture.cpp
   src/citygml/material.cpp
@@ -128,7 +128,7 @@ SET(PUBLIC_HEADER
   include/citygml/material.h
   include/citygml/geometry.h
   include/citygml/object.h
-  include/citygml/featureobject.h
+  include/citygml/_feature.h
   include/citygml/georeferencedtexture.h
   include/citygml/cityobject.h
   include/citygml/envelope.h

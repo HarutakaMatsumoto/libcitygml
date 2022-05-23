@@ -27,7 +27,7 @@ namespace citygml {
         virtual bool parseChildElementEndTag(const NodeType::XMLNode& node, const std::string& characters) override;
 
         // GMLFeatureCollectionElementParser interface
-        virtual FeatureObject* getFeatureObject() override;
+        virtual _Feature* getFeatureObject() override;
 
     private:
         static void initializeTypeIDTypeMap();

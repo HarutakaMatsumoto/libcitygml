@@ -2,7 +2,7 @@
 
 namespace citygml {
 
-    TransformationMatrix::TransformationMatrix() : Object("")
+    TransformationMatrix4x4Type::TransformationMatrix4x4Type() : Object("")
     {
        for (int i = 0; i < 4; i++) {
            for (int j = 0; j < 4; j++) {
@@ -12,7 +12,7 @@ namespace citygml {
        }
     }
 
-    TransformationMatrix::TransformationMatrix(double* matrix) : Object("")
+    TransformationMatrix4x4Type::TransformationMatrix4x4Type(double* matrix) : Object("")
     {
         for (size_t i = 0; i < 16; ++i) {
             m_matrix[i] = matrix[i];
@@ -25,17 +25,17 @@ namespace citygml {
         }
     }
 
-    const double* TransformationMatrix::getMatrix() const
+    const double* TransformationMatrix4x4Type::getMatrix() const
     {
         return m_matrix;
     }
 
-    const double* TransformationMatrix::getTransposedMatrix() const
+    const double* TransformationMatrix4x4Type::getTransposedMatrix() const
     {
         return m_transposedMatrix;
     }
 
-    TransformationMatrix::~TransformationMatrix()
+    TransformationMatrix4x4Type::~TransformationMatrix4x4Type()
     {
 
     }

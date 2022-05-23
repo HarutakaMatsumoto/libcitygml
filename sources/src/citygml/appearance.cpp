@@ -61,17 +61,17 @@ namespace citygml {
 
     bool Appearance::inTheme(const std::string& themeName) const
     {
-        return std::find(m_themes.begin(), m_themes.end(), themeName) != m_themes.end();
+        return std::find(themes.begin(), themes.end(), themeName) != themes.end();
     }
 
     void Appearance::addToTheme(std::string themeName)
     {
-        m_themes.push_back(themeName);
+        themes.push_back(themeName);
     }
 
     const std::vector<std::string>& Appearance::getThemes() const
     {
-        return m_themes;
+        return themes;
     }
 
 }

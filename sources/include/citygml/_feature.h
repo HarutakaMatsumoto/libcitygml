@@ -9,14 +9,14 @@ namespace citygml {
 
     class Envelope;
 
-    class LIBCITYGML_EXPORT FeatureObject : public Object {
+    class LIBCITYGML_EXPORT _Feature : public Object {
     public:
-        FeatureObject(const std::string& gmlID);
+        _Feature(const std::string& gmlID);
 
         const Envelope& getEnvelope() const;
         void setEnvelope(Envelope* e);
 
-        virtual ~FeatureObject();
+        virtual ~_Feature();
 
     protected:
         std::unique_ptr<Envelope> m_envelope;

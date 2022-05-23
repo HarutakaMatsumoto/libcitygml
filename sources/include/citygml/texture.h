@@ -1,20 +1,22 @@
 #pragma once
 
+#include <optional>
 #include <string>
 
 #include <citygml/citygml_api.h>
-#include <citygml/appearance.h>
+#include <citygml/codetype.h>
+#include <citygml/_surfacedata.h>
 #include <citygml/vecs.hpp>
 
 namespace citygml {
 
     class CityGMLFactory;
 
-    class LIBCITYGML_EXPORT Texture : public Appearance
+    class LIBCITYGML_EXPORT Texture : public _SurfaceData
     {
         friend class CityGMLFactory;
     public:
-        enum class WrapMode
+        enum class WrapModeType
         {
             WM_NONE,        // the resulting color is fully transparent
             WM_WRAP,        // the texture is repeated
@@ -29,8 +31,8 @@ namespace citygml {
 
         bool getRepeat() const;
 
-        WrapMode getWrapMode() const;
-        void setWrapMode(WrapMode mode);
+        WrapModeType getWrapMode() const;
+        void setWrapMode(WrapModeType mode);
 
         /**
          * @brief tries to interpret the string as a WrapMode. Does nothing on failure.
@@ -39,8 +41,8 @@ namespace citygml {
          */
         bool setWrapModeFromString(std::string wrapMode);
 
-        TVec4f getBorderColor() const;
-        void setBorderColor(TVec4f color);
+        ColorPlusOpacity getBorderColor() const;
+        void setBorderColor(ColorPlusOpacity color);
 
         std::string toString() const override;
 
@@ -52,10 +54,13 @@ namespace citygml {
     protected:
         Texture( const std::string& id );
         Texture( const std::string& id, const std::string& type );
-        std::string m_url;
+        
+        anyURI imageURI;
+        std::optional<CodeType> mimeType;
+        std::optional<TextureType> textureType;
         bool m_repeat;
-        WrapMode m_wrapMode;
-        TVec4f m_borderColor;
+        std::optional<WrapModeType> wrapMode;
+        std::optional<ColorPlusOpacity> borderColor;
     };
 
 }

@@ -9,7 +9,7 @@
 #include <citygml/envelope.h>
 #include <citygml/object.h>
 #include <citygml/vecs.hpp>
-#include <citygml/featureobject.h>
+#include <citygml/_feature.h>
 
 
 #include <stdexcept>

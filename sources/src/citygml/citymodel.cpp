@@ -37,7 +37,7 @@
 
 namespace citygml
 {
-    CityModel::CityModel(const std::string& id) : FeatureObject( id )
+    CityModel::CityModel(const std::string& id) : _Feature( id )
     {
 
     }

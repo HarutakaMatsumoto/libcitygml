@@ -98,7 +98,7 @@ namespace citygml {
         return false;
     }
 
-    FeatureObject* CityModelElementParser::getFeatureObject()
+    _Feature* CityModelElementParser::getFeatureObject()
     {
         return m_model;
     }

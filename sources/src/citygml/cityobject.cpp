@@ -13,7 +13,7 @@ ENUM_CLASS_BITWISE_OPERATORS(citygml::CityObject::CityObjectsType);
 
 namespace citygml {
 
-    CityObject::CityObject(const std::string& id, CityObject::CityObjectsType type)  : FeatureObject( id ), m_type( type )
+    CityObject::CityObject(const std::string& id, CityObject::CityObjectsType type)  : _Feature( id ), m_type( type )
     {
 
     }

@@ -4,23 +4,23 @@
 #include <memory>
 
 namespace citygml {
-    class LIBCITYGML_EXPORT TransformationMatrix : public Object
+    class LIBCITYGML_EXPORT TransformationMatrix4x4Type : public Object
     {
     public:
-        TransformationMatrix();
+        TransformationMatrix4x4Type();
 
 
-        TransformationMatrix(double* matrix);
+        TransformationMatrix4x4Type(double* matrix);
 
 
         const double* getMatrix() const;
         const double* getTransposedMatrix() const;
 
-        ~TransformationMatrix();
+        ~TransformationMatrix4x4Type();
 
 
     protected:
-        double m_matrix[16];
+        doubleList m_matrix[16];
         double m_transposedMatrix[16];
     };
 }

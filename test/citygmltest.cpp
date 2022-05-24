@@ -20,7 +20,6 @@
 #include <algorithm>
 #include <citygml/citygml.h>
 #include <citygml/citymodel.h>
-#include <citygml/cityobject.h>
 
 void analyzeObject( const citygml::CityObject*, unsigned int );
 
@@ -80,7 +79,7 @@ int main( int argc, char **argv )
 
     std::shared_ptr<const citygml::CityModel> city;
     try{
-        city = citygml::load( argv[fargc], params );
+        citygml::loadDOM( argv[fargc], params );
     }catch(const std::runtime_error& e){
         
     }

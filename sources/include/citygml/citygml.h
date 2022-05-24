@@ -92,4 +92,6 @@ namespace citygml
 
     LIBCITYGML_EXPORT std::shared_ptr<const CityModel> load( const std::string& fileName, const ParserParams& params, std::shared_ptr<CityGMLLogger> logger = nullptr);
 
+    LIBCITYGML_EXPORT int loadDOM(std::string fileName, ParserParams parameters , std::shared_ptr<CityGMLLogger> logger = nullptr);
+
 }

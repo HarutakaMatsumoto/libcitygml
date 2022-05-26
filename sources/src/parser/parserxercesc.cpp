@@ -348,65 +348,6 @@ namespace citygml
 
     }
 
-int loadDOMLS(std::string fileName, ParserParams parameters , std::shared_ptr<CityGMLLogger> logger) {
-    if (!logger) {
-        logger = std::make_shared<StdLogger>();
-    }
-    
-    if (!initXerces(logger)) {
-        return 1;
-    }
-    
-    XMLCh features[100];
-    xercesc::XMLString::transcode("LS", features, 99);
-    xercesc::DOMImplementation * implementation = xercesc::DOMImplementationRegistry::getDOMImplementation(features);
-    xercesc::DOMLSParser * parser = (static_cast<xercesc::DOMImplementationLS *>(implementation))->createLSParser(xercesc::DOMImplementationLS::MODE_SYNCHRONOUS, 0);
-    
-    if (parser->getDomConfig()->canSetParameter(xercesc::XMLUni::fgDOMValidate, true)) {
-        parser->getDomConfig()->setParameter(xercesc::XMLUni::fgDOMValidate, true);
-    }
-    if (parser->getDomConfig()->canSetParameter(xercesc::XMLUni::fgDOMNamespaces, true)) {
-        parser->getDomConfig()->setParameter(xercesc::XMLUni::fgDOMNamespaces, true);
-    }
-    if (parser->getDomConfig()->canSetParameter(xercesc::XMLUni::fgDOMDatatypeNormalization, true)) {
-        parser->getDomConfig()->setParameter(xercesc::XMLUni::fgDOMDatatypeNormalization, true);
-    }
-    
-    CityGMLHandlerXerces handler(parameters, fileName, logger);
-    parser->getDomConfig()->setParameter(xercesc::XMLUni::fgDOMErrorHandler, &handler);
-    
-    xercesc::DOMDocument * document;
-    
-    try {
-        document = parser->parseURI(fileName.c_str());
-//        document->getAttributes()
-        xercesc::DOMElement * root = document->getDocumentElement();
-        xercesc::DOMNode * contextNode;
-        xercesc::DOMXPathNSResolver * resolver(document->createNSResolver(contextNode));
-        
-        xercesc::DOMXPathResult * result = document->evaluate(xercesc::XMLString::transcode("/core:CityModel/gml:boundedBy"), contextNode, resolver, xercesc::DOMXPathResult::ORDERED_NODE_SNAPSHOT_TYPE, nullptr);
-        
-        xercesc::DOMNode * nodeValue = result->getNodeValue();
-        if (nodeValue == nullptr) {
-            return 1;
-        }
-        
-        std::cout << toStdString(nodeValue->getFirstChild()->getNodeValue()) << "\n";
-    } catch (xercesc::XMLException const& exception) {
-        CITYGML_LOG_ERROR(logger, "parseURI(_) got a following XMLException:\n" + toStdString(exception.getMessage()));
-        return -1;
-    } catch (xercesc::DOMException const& exception) {
-        CITYGML_LOG_ERROR(logger, "parseURI(_) got a following DOMException:\n" + toStdString(exception.getMessage()));
-        return -1;
-    } catch (...) {
-        CITYGML_LOG_ERROR(logger, "parseURI(_) got an unexpected exception \n");
-        return -1;
-    }
-    
-    parser->release();
-    return 0;
-}
-
 int loadDOM(std::string fileName, ParserParams parameters , std::shared_ptr<CityGMLLogger> logger) {
     if (!logger) {
         logger = std::make_shared<StdLogger>();
@@ -426,19 +367,17 @@ int loadDOM(std::string fileName, ParserParams parameters , std::shared_ptr<City
     try {
         parser->parse(fileName.c_str());
         xercesc::DOMDocument * document = parser->getDocument();
-//        document->getAttributes()
         xercesc::DOMElement * root = document->getDocumentElement();
-        xercesc::DOMNode * contextNode;
-        xercesc::DOMXPathNSResolver * resolver(document->createNSResolver(contextNode));
+        xercesc::DOMXPathNSResolver * resolver(document->createNSResolver(root));
         
-        xercesc::DOMXPathResult * result = document->evaluate(xercesc::XMLString::transcode("/root/ApplicationSettings"), root, nullptr, xercesc::DOMXPathResult::ORDERED_NODE_SNAPSHOT_TYPE, nullptr);
+        xercesc::DOMXPathResult * result = document->evaluate(xercesc::XMLString::transcode("*/bldg:Building"), root, resolver, xercesc::DOMXPathResult::UNORDERED_NODE_SNAPSHOT_TYPE, nullptr);
         
-        xercesc::DOMNode * nodeValue = result->getNodeValue();
-        if (nodeValue == nullptr) {
-            return 1;
+        XMLCh * groundRiskKey = xercesc::XMLString::transcode("groundRisk");
+        double groundRisk = 10.0;
+        for (long i = 0; result->snapshotItem(i); i++) {
+            xercesc::DOMNode * node = result->getNodeValue();
+            node->setUserData(groundRiskKey, &groundRisk, nullptr);
         }
-        
-        std::cout << toStdString(nodeValue->getFirstChild()->getNodeValue()) << "\n";
     } catch (xercesc::XMLException const& exception) {
         CITYGML_LOG_ERROR(logger, "parseURI(_) got a following XMLException:\n" + toStdString(exception.getMessage()));
         return -1;
